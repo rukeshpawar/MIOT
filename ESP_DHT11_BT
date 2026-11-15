@@ -1,0 +1,35 @@
+
+#include <DHT.h>
+#include <BluetoothSerial.h>
+
+#define DHT_PIN 4
+#define DHT_TYPE DHT11
+
+DHT dht(DHT_PIN, DHT_TYPE);
+
+BluetoothSerial SerialBT;
+
+void setup()
+{
+  Serial.begin(115200);
+
+  dht.begin();
+
+  SerialBT.begin("ESP32 with DHT11");
+
+  Serial.println("Bluetooth Started");
+}
+
+void loop()
+{
+  float Humidity = dht.readHumidity();
+  float Temperature = dht.readTemperature();
+
+  SerialBT.print("Humidity: ");
+  SerialBT.println(Humidity);
+
+  SerialBT.print("Temperature: ");
+  SerialBT.println(Temperature);
+
+  delay(2000);
+}
