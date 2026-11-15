@@ -1,0 +1,41 @@
+const int pirPin = 2;
+const int ldrPin = A0;
+const int lightPin = 8;
+
+int ldrValue = 0;
+int motion = 0;
+
+int threshold = 500;
+
+void setup()
+{
+  pinMode(pirPin, INPUT);
+  pinMode(lightPin, OUTPUT);
+
+  Serial.begin(9600);
+}
+
+void loop()
+{
+  motion = digitalRead(pirPin);
+  ldrValue = analogRead(ldrPin);
+
+  Serial.print("Motion: ");
+  Serial.println(motion);
+
+  Serial.print("LDR Value: ");
+  Serial.println(ldrValue);
+
+  if (motion == HIGH && ldrValue < threshold)
+  {
+    digitalWrite(lightPin, HIGH);
+    Serial.println("Light ON");
+  }
+  else
+  {
+    digitalWrite(lightPin, LOW);
+    Serial.println("Light OFF");
+  }
+
+  delay(500);
+}
