@@ -1,0 +1,22 @@
+#include <DHT.h>
+
+#define DHT_PIN 4
+DHT dht(DHT_PIN,DHT11);
+
+
+void setup() {
+  Serial.begin(115200);
+  dht.begin();
+}
+void loop() {
+  int Humidity= dht.readHumidity();
+  int Temparature= dht.readTemperature();
+
+  Serial.print("Humidity:");
+  Serial.println(Humidity);
+
+   Serial.print("Temparature:");
+  Serial.println(Temparature);
+
+  delay(2000); 
+}
