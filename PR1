@@ -1,0 +1,37 @@
+#define LED 13
+#define Push 12
+
+unsigned long previousTime = 0;
+const int debounceTime = 50;
+
+bool ledState = LOW;
+int buttonState = LOW;
+
+void setup()
+{
+  pinMode(LED, OUTPUT);
+  pinMode(Push, INPUT_PULLUP);
+
+  Serial.begin(9600);
+}
+
+void loop()
+{
+  int reading = digitalRead(Push);
+
+  if (reading == buttonState)
+  {
+    previousTime = millis();
+  }
+
+  if (millis() - previousTime > debounceTime)
+  {
+      buttonState = reading;
+
+      if (buttonState == LOW)
+      {
+        ledState = !ledState;
+        digitalWrite(LED, ledState);
+      }
+  }
+}
